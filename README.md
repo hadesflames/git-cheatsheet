@@ -1,6 +1,7 @@
 #git Cheat Sheet
 
 ###always pull from the same
+
     git config branch.master.remote origin
     git config branch.master.merge refs/heads/master
 
