@@ -1,16 +1,28 @@
-#git Cheat Sheet
+# git Cheat Sheet
 
-###always pull from the same
+### always pull from the same
 
     git config branch.master.remote origin
     git config branch.master.merge refs/heads/master
 
-###Start from existing code (-u is to [set the upstream](http://stackoverflow.com/a/5561327/463065).)
+### Start from existing code (-u is to [set the upstream](http://stackoverflow.com/a/5561327/463065).)
 
     git remote add origin git@github.com:trufa/test.git
     git push -u origin master 
 
-###Use [kdiff3](http://kdiff3.sourceforge.net/) as mergetool to solve conflicts
+### Ignoring versioned files
+Some files in a repository change often but are rarely committed. Usually, these are various local configuration files that are edited, but should never be committed upstream. Git lets you ignore those files by assuming they are unchanged.
+
+In Terminal, navigate to the location of your Git repository and run the following command:
+
+    git update-index --assume-unchanged path/to/file.txt
+
+Once you mark a file like this, Git completely ignores any changes on it. It will never show up when running `git status` or `git diff`, nor will it ever be committed.
+To make Git track the file again, simply run:
+
+    git update-index --no-assume-unchanged path/to/file.txt 
+    
+### Use [kdiff3](http://kdiff3.sourceforge.net/) as mergetool to solve conflicts
 
 (paste this inside of your .git/config file)
 
@@ -22,7 +34,7 @@
         keepBackup = false
         trustExitCode = false
         
-###Four ways of undoing last n commits
+### Four ways of undoing last n commits
 
 [Read explanation here!](http://stackoverflow.com/a/6866485/463065)
 
@@ -42,11 +54,11 @@ If you only want to change the last commit message
 
     git commit --amend -m "New commit message"
 
-###Retrieve a specific version of a file
+### Retrieve a specific version of a file
 
     git show <commit-id>:<path>
 
-###Basic branching [(tutorial)](http://git-scm.com/book/en/Git-Branching-Basic-Branching-and-Merging)
+### Basic branching [(tutorial)](http://git-scm.com/book/en/Git-Branching-Basic-Branching-and-Merging)
 
 Checkout to a new branch
 
@@ -57,11 +69,11 @@ Go back and merge
     git checkout master
     git merge newBranchName
 
-###Push the current branch and set the remote as upstream
+### Push the current branch and set the remote as upstream
 
 git push --set-upstream origin branch
 
-###Help for resolve merge conflicts
+### Help for resolve merge conflicts
 
 When at a merge conflict, find changes between the common ancestor and
 the file on our branch which was merged
@@ -73,61 +85,61 @@ are merging into the current branch
 
     git diff :1:<path> :3:<path>
 
-###Revert uncommited file to last version
+### Revert uncommited file to last version
 
     git checkout filename
     
-###Set vimdiff as default difftool [(source)](http://stackoverflow.com/a/3713865/463065)
+### Set vimdiff as default difftool [(source)](http://stackoverflow.com/a/3713865/463065)
 
     git config --global diff.tool vimdiff
     git config --global difftool.prompt false
     git config --global alias.d difftool
 
-###Stash local changes to be able to pull without errors [(source)](http://stackoverflow.com/a/14318266/463065)
+### Stash local changes to be able to pull without errors [(source)](http://stackoverflow.com/a/14318266/463065)
 
     git stash save --keep-index
 
-###Remove untracked files
+### Remove untracked files
 
 Files are lost permanently. Use *-n* or *--dry-run* to preview the effected files.
 
-####Remove only untracked files
+#### Remove only untracked files
 
     git clean -f
 
-####Remove untracked files & directories
+#### Remove untracked files & directories
 
     git clean -f -d
 
-###Check if there is anything to pull, bring remote up to date [(source)](http://stackoverflow.com/a/3278427/463065)
+### Check if there is anything to pull, bring remote up to date [(source)](http://stackoverflow.com/a/3278427/463065)
 
     git remote update
     
-###Know what you pulled [(source)](http://stackoverflow.com/a/1362990/463065)
+### Know what you pulled [(source)](http://stackoverflow.com/a/1362990/463065)
 
     git diff master master@{1}
     
-###Checkout to a remote branch
+### Checkout to a remote branch
 
     git checkout -b abranch origin/abranch
 
-###Move uncommitted changes to a new branch [(source)](http://stackoverflow.com/a/1394804/463065)
+### Move uncommitted changes to a new branch [(source)](http://stackoverflow.com/a/1394804/463065)
 
     git checkout -b <new-branch>
     git add <files>
     git commit
     
-###Move uncommitted changes to existing branch [(source)](http://stackoverflow.com/a/556986/463065)
+### Move uncommitted changes to existing branch [(source)](http://stackoverflow.com/a/556986/463065)
 
     git stash
     git checkout branch2
     git stash pop
 
-###Get commits by certain user [(source)](http://stackoverflow.com/a/2954501/463065)
+### Get commits by certain user [(source)](http://stackoverflow.com/a/2954501/463065)
 
     git log --author=<pattern>
     
-###Rename a file
+### Rename a file
 
     git mv dir/oldName dir/newName
 
@@ -135,7 +147,7 @@ And commit the changes.
 
 Note: the file needs to be added (`git add file`).
 
-###Exclude file from diff [(source)](http://stackoverflow.com/a/10421385/463065)
+### Exclude file from diff [(source)](http://stackoverflow.com/a/10421385/463065)
 
 Create a repository specific diff driver with this command
 
@@ -147,11 +159,11 @@ Assign the nodiff driver to those files you want ignored in your `.git/info/attr
 
     irrelevant.php    diff=nodiff
     
-###See what was changed by one specific commit
+### See what was changed by one specific commit
 
     git show HashOfTheCommmit
 
-###See history of one file [(source)](http://stackoverflow.com/questions/278192/view-the-change-history-of-a-file-using-git-versioning)
+### See history of one file [(source)](http://stackoverflow.com/questions/278192/view-the-change-history-of-a-file-using-git-versioning)
 
     gitk fileName
     
@@ -159,7 +171,7 @@ Or
 
     git log -p fileName
 
-###List changes between two branches
+### List changes between two branches
 
 List changes files
 
@@ -173,7 +185,7 @@ List changed commits in one branch but not another (in secondBranch not in first
 
     git log --oneline ^firstBranch secondBranch
 
-###Tags (annotated, the kind you can push to another repo)
+### Tags (annotated, the kind you can push to another repo)
 
 Make an annotated tag
 
@@ -194,13 +206,13 @@ Rename a tag in local and remote repo
     git push origin :refs/tags/oldTagName
     git push --tags
 
-###Repo splunking
+### Repo splunking
 
 List files in the repo on abranch (use 'HEAD' for current branch)
 
     git ls-tree --full-tree -r abranch | awk '{print $4}'
     
-###Compare the commits from two branches ([source](http://stackoverflow.com/a/11676279/463065))
+### Compare the commits from two branches ([source](http://stackoverflow.com/a/11676279/463065))
 
 Display all commits that are in A but not in B
 
